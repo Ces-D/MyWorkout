@@ -1,5 +1,8 @@
 <div class="container">
     <h1 class="row justify-content-center pt-5">Login</h1>
+    {{#if Errors}}
+    <span>{{Errors}}</span>
+    {{/if}}
     <form>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">User Name</label>
