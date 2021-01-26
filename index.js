@@ -35,19 +35,27 @@ app.engine(
 );
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
-const routeHandler = require("./routes/index");
 
+// Routes 
+const routeHandler = require("./routes/index");
 app.all("/*", routeHandler);
 
 // Error Handler
 app.use((err, req, res, next) => {
     console.log(err);
-    res.sendStatus(err.status || 500);
+    res.status(err.status || 500).render("error", {
+        errorTitle: "Oops!",
+        errorMessage:
+            "Sorry there was an error with our services. We are working to fix it!",
+    });
 });
 
 // 404 Handler
 app.use((req, res) => {
-    res.sendStatus(404);
+    res.status(404).render("error", {
+        errorTitle: "404 Page",
+        errorMessage: "The page you are requesting does not exist",
+    });
 });
 
 app.listen(process.env.PORT || 3000);
