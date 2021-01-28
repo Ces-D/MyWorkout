@@ -5,13 +5,18 @@ export class AuthenticationError extends Error {
     }
 }
 
-// UserName 
-// Password
+// UserName (unique string max 50) 
+// Password (encrypted string max 120)
+// created_at (dateTime)
+// updated_at (dateTime)
 // 
-// Exercise 
-// weight
-// Reps
-// DateTime
+// Exercise (string)
+// weight (int )
+// Reps (int)
+// dateTime (dateTime)
+// client (id || username of Client)
 // 
-// Goal
-// Notes
+// Goal (Larger String)
+// Notes (Larger String)
+
+// 

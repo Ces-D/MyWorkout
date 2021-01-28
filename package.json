@@ -17,7 +17,8 @@
     "express-handlebars": "^5.2.0",
     "express-session": "^1.17.1",
     "helmet": "^4.4.1",
-    "pg": "8.2.x"
+    "pg": "8.2.x",
+    "sequelize": "^6.5.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",
