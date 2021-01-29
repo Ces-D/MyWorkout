@@ -10,6 +10,7 @@ export class AuthenticationError extends Error {
 // created_at (dateTime)
 // updated_at (dateTime)
 // 
+// trainer (string)
 // Exercise (string)
 // weight (int )
 // Reps (int)
@@ -20,3 +21,20 @@ export class AuthenticationError extends Error {
 // Notes (Larger String)
 
 // 
+// GymSession id
+// sessionDate (Date defaults to tomorrow )
+// sessionStart 
+// sessionEnd
+// trainer (defaults to self id || userName)
+// client (defaults to self id || username of Client)
+// Exercise (string)
+// weight (int )
+// Reps (int)
+// Duration (int)
+
+// Program
+// programName
+// purpose
+// trainer
+
+// TODO: create associations between models 
