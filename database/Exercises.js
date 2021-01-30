@@ -1,8 +1,8 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 import sequelize from "../config";
 
-export default class Exercises extends Model {}
-Exercises.init(
+export class Exercise extends Model {}
+Exercise.init(
     {
         id: {
             type: DataTypes.UUID,
@@ -28,5 +28,5 @@ Exercises.init(
             allowNull: true,
         },
     },
-    { db, timestamps: true }
+    { sequelize, timestamps: true }
 );

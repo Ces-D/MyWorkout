@@ -1,14 +1,14 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 import sequelize from "../config";
 
-export default class Workouts extends Model {
+export default class Workout extends Model {
     getWorkoutLength() {
         // assuming they are updating their workouts as they go
         // the time a session is created should differ from the last time it was updated at
         return sessionEnd - sessionStart;
     }
 }
-Workouts.init(
+Workout.init(
     {
         id: {
             type: DataTypes.UUID,

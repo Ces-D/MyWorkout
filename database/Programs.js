@@ -1,8 +1,8 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
 import sequelize from "../config";
 
-export default class Programs extends Model {}
-Programs.init(
+export default class Program extends Model {}
+Program.init(
     {
         id: {
             type: DataTypes.UUID,
