@@ -1,4 +1,6 @@
-const authRouter = require("express").Router();
+import { Router } from "express";
+
+const authRouter = Router();
 
 authRouter
     /* Login Page */
@@ -12,8 +14,7 @@ authRouter
     // POST Login Logic
     .post(async (req, res, next) => {
         try {
-            
-            res.send("Success Logging In") // TODO: Success Logic
+            res.send("Success Logging In"); // TODO: Success Logic
         } catch (error) {
             if (error instanceof AuthenticationError) {
                 res.render("login", {
@@ -24,8 +25,8 @@ authRouter
                 next(error);
             }
         }
-    })
-
+    });
+authRouter
     /* Register Page */
     .route("/register")
 
@@ -40,4 +41,4 @@ authRouter
         } catch (error) {}
     });
 
-module.exports = authRouter;
+export default authRouter;

@@ -1,6 +1,7 @@
-const routeHandler = require("express").Router();
-const authRouter = require("./authentication");
+import { Router } from "express";
+import authRouter from "./authentication/index.js";
+const routeHandler = Router();
 
 routeHandler.use(authRouter);
 
-module.exports = routeHandler;
+export default routeHandler;

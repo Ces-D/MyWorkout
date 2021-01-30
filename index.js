@@ -1,13 +1,17 @@
-require("dotenv").config();
-const express = require("express");
+import "dotenv/config.js";
+import express from "express";
+import handlebars from "express-handlebars";
+import helmet from "helmet";
+import compression from "compression";
+import cors from "cors";
+import session from "express-session";
+import logger from "morgan";
+import { join } from "path";
+import routeHandler from "./routes/index.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
 const app = express();
-const handlebars = require("express-handlebars");
-const helmet = require("helmet");
-const compression = require("compression");
-const cors = require("cors");
-const session = require("express-session");
-const logger = require("morgan");
-const path = require("path");
 
 if (process.env.NODE_ENV === "development") {
     app.use(logger("dev"));
@@ -24,20 +28,22 @@ app.use(
     })
 );
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.engine(
     "hbs",
     handlebars({
-        layoutsDir: path.join(__dirname, "/views/layouts"),
-        partialsDir: path.join(__dirname, "/views/partials"),
+        layoutsDir: join(__dirname, "/views/layouts"),
+        partialsDir: join(__dirname, "/views/partials"),
         extname: "hbs",
         defaultLayout: "base",
     })
 );
 app.set("view engine", "hbs");
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(join(__dirname, "public")));
 
-// Routes 
-const routeHandler = require("./routes/index");
+// Routes
 app.all("/*", routeHandler);
 
 // Error Handler
