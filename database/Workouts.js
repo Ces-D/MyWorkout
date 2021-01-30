@@ -1,5 +1,5 @@
 import { Sequelize, DataTypes, Model } from "sequelize";
-import sequelize from "../config";
+import sequelize from "../config/index.js";
 
 export default class Workout extends Model {
     getWorkoutLength() {

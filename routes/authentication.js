@@ -1,13 +1,14 @@
 import { Router } from "express";
+import { User } from "../database/index.js";
 
 const authRouter = Router();
 
+/* Login Page */
 authRouter
-    /* Login Page */
     .route("/login")
 
     // GET Login Page
-    .get((req, res, next) => {
+    .get(async (req, res, next) => {
         res.render("login", { pageTitle: "Login" });
     })
 
@@ -26,8 +27,9 @@ authRouter
             }
         }
     });
+
+/* Register Page */
 authRouter
-    /* Register Page */
     .route("/register")
 
     // GET Register PAge

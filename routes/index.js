@@ -1,5 +1,5 @@
 import { Router } from "express";
-import authRouter from "./authentication/index.js";
+import authRouter from "./authentication.js";
 const routeHandler = Router();
 
 routeHandler.use(authRouter);
