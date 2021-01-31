@@ -8,6 +8,7 @@ import session from "express-session";
 import logger from "morgan";
 import { join } from "path";
 import routeHandler from "./routes/index.js";
+import sequelize from "./config/index.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV === "development") {
     app.use(logger("dev"));
 }
 
+sequelize.sync();
 app.use(helmet());
 app.use(compression());
 app.use(cors());

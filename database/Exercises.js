@@ -1,30 +1,22 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import sequelize from "../config";
+import Sequelize from "sequelize";
+import sequelize from "../config/index.js";
 
-export class Exercise extends Model {}
+export class Exercise extends Sequelize.Model {}
 Exercise.init(
     {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: Sequelize.UUIDV4,
-        },
-        gymSession: {
-            type: DataTypes.INTEGER,
-            references: { model: GymSession, key: "id" },
-        },
         exercise: {
-            type: DataTypes.STRING,
+            type: Sequelize.DataTypes.STRING,
         },
         weight: {
-            type: DataTypes.INTEGER,
+            type: Sequelize.DataTypes.INTEGER,
             allowNull: true,
         },
         reps: {
-            type: DataTypes.INTEGER,
+            type: Sequelize.DataTypes.INTEGER,
             allowNull: true,
         },
         duration: {
-            type: DataTypes.INTEGER,
+            type: Sequelize.DataTypes.INTEGER,
             allowNull: true,
         },
     },

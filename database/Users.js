@@ -1,19 +1,22 @@
-import { Sequelize, DataTypes, Model } from "sequelize";
-import sequelize from "../config";
+import Sequelize from "sequelize";
+import sequelize from "../config/index.js";
+import { encryptPassword } from "../utils/encryption.js";
 
-export class User extends Model {}
+export class User extends Sequelize.Model {}
 User.init(
     {
-        id: {
-            type: DataTypes.UUID,
-            defaultValue: Sequelize.UUIDV4,
-        },
         userName: {
-            type: DataTypes.STRING,
+            type: Sequelize.DataTypes.STRING,
             allowNull: false,
             unique: true,
         },
-        password: { type: DataTypes.STRING, allowNull: false },
+        hashedPassword: {
+            type: Sequelize.DataTypes.STRING,
+            allowNull: false,
+            set(value) {
+                this.setDataValue("password", encryptPassword(value));
+            },
+        },
     },
-    { sequelize, timestamps: true }
+    { sequelize, timestamps: false }
 );

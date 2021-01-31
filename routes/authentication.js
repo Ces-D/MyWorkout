@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { User } from "../database/index.js";
+import { encryptPassword } from "../utils/encryption.js";
 
 const authRouter = Router();
 
@@ -15,7 +16,17 @@ authRouter
     // POST Login Logic
     .post(async (req, res, next) => {
         try {
-            res.send("Success Logging In"); // TODO: Success Logic
+            const { userName, password } = req.body;
+            const user = await User.findOne({ where: { userName: userName } });
+            if (user) {
+                if (encryptPassword(password) === user.password) {
+                    // Login the user because they match
+                }
+                // user and password do not match
+                // Authentication Error
+            }
+            // user does not exist with that name
+            // Authentication Error
         } catch (error) {
             if (error instanceof AuthenticationError) {
                 res.render("login", {
@@ -40,6 +51,9 @@ authRouter
     // POST Register Page
     .post(async (req, res, next) => {
         try {
+            const { userName, password } = req.body;
+            // createUser
+            // Errors such as unique Error
         } catch (error) {}
     });
 
