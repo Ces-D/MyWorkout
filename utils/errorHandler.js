@@ -37,4 +37,3 @@ export class AuthenticationError extends Error {
 // purpose
 // trainer
 
-// TODO: create associations between models 

@@ -3,6 +3,13 @@ import { User } from "../database/index.js";
 import { encryptPassword } from "../utils/encryption.js";
 
 const authRouter = Router();
+//TODO: create first User and log in first User
+// TODO: implement sessions for login status
+// TODO: create login check for other routes redirecting to login
+// TODO: Create lib to handle methods to not pollute this page?
+// TODO: Consider client-session packakage and using scrypt or argon2
+// TODO implement csurf into html templates
+
 
 /* Login Page */
 authRouter

@@ -1,19 +1,21 @@
 <div class="container">
-    <h1 class="row justify-content-center pt-5">Login</h1>
+    <h1 class="row justify-content-center pt-5">Regsiter</h1>
     {{#if Errors}}
     <span>{{Errors}}</span>
     {{/if}}
-    <form method="POST"
+    <form method="POST">
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">User Name</label>
-            <input type="text" class="form-control" id="usernameInput" aria-describedby="usernameHelp">
+            <input type="text" class="form-control" id="usernameInpute" aria-describedby="usernameHelp">
         </div>
         <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
             <input type="password" class="form-control" id="InputPassword1">
         </div>
+        <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Re-Type Password</label>
+            <input type="password" class="form-control" id="InputPassword2">
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-
-    <a href="/register" class="row justify-content-center pt-3">Register</a>
 </div>
