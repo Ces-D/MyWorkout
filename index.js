@@ -4,11 +4,11 @@ import handlebars from "express-handlebars";
 import helmet from "helmet";
 import compression from "compression";
 import cors from "cors";
-import session from "express-session";
+import cookieSession from "cookie-session";
+import cookieParser from "cookie-parser";
 import logger from "morgan";
-import { join } from "path";
-import routeHandler from "./routes/index.js";
-import sequelize from "./config/index.js";
+import { routeHandler } from "./routes/index.js";
+import { sequelize } from "./config/index.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -23,30 +23,32 @@ app.use(helmet());
 app.use(compression());
 app.use(cors());
 app.use(
-    session({
+    cookieSession({
+        name: "Session",
         secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
+        httpOnly: true,
+        maxAge: 1 * 60 * 1000,
     })
 );
+app.use(express.json());
+app.use(cookieParser());
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.engine(
     "hbs",
     handlebars({
-        layoutsDir: join(__dirname, "/views/layouts"),
-        partialsDir: join(__dirname, "/views/partials"),
+        layoutsDir: path.join(__dirname, "/views/layouts"),
+        partialsDir: path.join(__dirname, "/views/partials"),
         extname: "hbs",
         defaultLayout: "base",
     })
 );
 app.set("view engine", "hbs");
-app.use(express.static(join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Routes
-app.all("/*", routeHandler);
+app.use(routeHandler);
 
 // Error Handler
 app.use((err, req, res, next) => {

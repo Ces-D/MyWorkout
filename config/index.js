@@ -1,1 +1,1 @@
-export { default } from "./db.js";
+export { sequelize } from "./db.js";

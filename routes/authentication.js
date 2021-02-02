@@ -1,67 +1,54 @@
 import { Router } from "express";
-import { User } from "../database/index.js";
-import { encryptPassword } from "../utils/encryption.js";
+import { csurfProtection } from "../lib/csurf";
+import { loginValidation, loginHandler } from "../lib/loginHandler";
+import {
+    registrationValidation,
+    registrationHandler,
+} from "../lib/registrationHandler";
 
 const authRouter = Router();
 //TODO: create first User and log in first User
-// TODO: implement sessions for login status
-// TODO: create login check for other routes redirecting to login
-// TODO: Create lib to handle methods to not pollute this page?
-// TODO: Consider client-session packakage and using scrypt or argon2
-// TODO implement csurf into html templates
+// TODO: complete registrationValidation
+// TODO: complete, export then import errorHandler
 
+/* Csrf Protection */
+authRouter.use(csurfProtection);
+
+/* Login Status Check */
+authRouter.use((req, res, next) => {
+    if (req.user) {
+        res.send("User Already Logged In"); // TODO: testing
+    } else next();
+});
 
 /* Login Page */
 authRouter
     .route("/login")
 
-    // GET Login Page
     .get(async (req, res, next) => {
-        res.render("login", { pageTitle: "Login" });
+        res.render("login", {
+            pageTitle: "Login",
+            csrfToken: req.csrfToken(),
+        });
     })
 
-    // POST Login Logic
-    .post(async (req, res, next) => {
-        try {
-            const { userName, password } = req.body;
-            const user = await User.findOne({ where: { userName: userName } });
-            if (user) {
-                if (encryptPassword(password) === user.password) {
-                    // Login the user because they match
-                }
-                // user and password do not match
-                // Authentication Error
-            }
-            // user does not exist with that name
-            // Authentication Error
-        } catch (error) {
-            if (error instanceof AuthenticationError) {
-                res.render("login", {
-                    pageTitle: "Login",
-                    Errors: error.message,
-                });
-            } else {
-                next(error);
-            }
-        }
+    .post(loginValidation, loginHandler, (req, res, next) => {
+        res.send("Login was Successful"); // TODO: test
     });
 
 /* Register Page */
 authRouter
     .route("/register")
 
-    // GET Register PAge
     .get((req, res, next) => {
-        res.render("register", { pageTitle: "Register" });
+        res.render("register", {
+            pageTitle: "Register",
+            csrffToken: req.csrfToken(),
+        });
     })
 
-    // POST Register Page
-    .post(async (req, res, next) => {
-        try {
-            const { userName, password } = req.body;
-            // createUser
-            // Errors such as unique Error
-        } catch (error) {}
+    .post(registrationValidation, registrationHandler, (req, res, next) => {
+        res.send("Registration Successful"); //TODO: test
     });
 
 export default authRouter;
