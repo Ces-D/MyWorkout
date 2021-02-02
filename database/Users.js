@@ -1,6 +1,6 @@
 import Sequelize from "sequelize";
-import sequelize from "../config/index.js";
-import { encryptPassword } from "../utils/encryption.js";
+import { sequelize } from "../config/index.js";
+import bcrypt from "bcrypt";
 
 export class User extends Sequelize.Model {}
 User.init(
@@ -14,7 +14,9 @@ User.init(
             type: Sequelize.DataTypes.STRING,
             allowNull: false,
             set(value) {
-                this.setDataValue("password", encryptPassword(value));
+                bcrypt.hash(value, 10).then(function (hash) {
+                    this.setDataValue("hashedPassword", hash);
+                });
             },
         },
     },
