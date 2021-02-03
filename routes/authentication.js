@@ -1,18 +1,15 @@
 import { Router } from "express";
-import { csurfProtection } from "../lib/csurf";
-import { loginValidation, loginHandler } from "../lib/loginHandler";
+import { csurfProtection } from "../lib/csurf.js";
+import { loginValidation, loginHandler } from "../lib/loginHandler.js";
 import {
     registrationValidation,
     registrationHandler,
-} from "../lib/registrationHandler";
+} from "../lib/registrationHandler.js";
 
 const authRouter = Router();
 //TODO: create first User and log in first User
 // TODO: complete registrationValidation
 // TODO: complete, export then import errorHandler
-
-/* Csrf Protection */
-authRouter.use(csurfProtection);
 
 /* Login Status Check */
 authRouter.use((req, res, next) => {
@@ -21,11 +18,14 @@ authRouter.use((req, res, next) => {
     } else next();
 });
 
+/* Csurf Protection */
+authRouter.use(csurfProtection);
+
 /* Login Page */
 authRouter
     .route("/login")
 
-    .get(async (req, res, next) => {
+    .get((req, res, next) => {
         res.render("login", {
             pageTitle: "Login",
             csrfToken: req.csrfToken(),
@@ -43,7 +43,7 @@ authRouter
     .get((req, res, next) => {
         res.render("register", {
             pageTitle: "Register",
-            csrffToken: req.csrfToken(),
+            csrfToken: req.csrfToken(),
         });
     })
 

@@ -1,5 +1,5 @@
 import "dotenv/config.js";
-import express from "express";
+import express, { urlencoded } from "express";
 import handlebars from "express-handlebars";
 import helmet from "helmet";
 import compression from "compression";
@@ -30,8 +30,9 @@ app.use(
         maxAge: 1 * 60 * 1000,
     })
 );
-app.use(express.json());
 app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -52,7 +53,7 @@ app.use(routeHandler);
 
 // Error Handler
 app.use((err, req, res, next) => {
-    console.log(err);
+    console.log("Error", err.message);
     res.status(err.status || 500).render("error", {
         errorTitle: "Oops!",
         errorMessage:

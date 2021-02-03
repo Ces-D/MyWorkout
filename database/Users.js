@@ -14,9 +14,8 @@ User.init(
             type: Sequelize.DataTypes.STRING,
             allowNull: false,
             set(value) {
-                bcrypt.hash(value, 10).then(function (hash) {
-                    this.setDataValue("hashedPassword", hash);
-                });
+                const hash = bcrypt.hashSync(value, 10);
+                this.setDataValue("hashedPassword", hash);
             },
         },
     },
