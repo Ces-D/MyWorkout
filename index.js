@@ -1,28 +1,41 @@
-require("dotenv").config();
-const express = require("express");
+import "dotenv/config.js";
+import express, { urlencoded } from "express";
+import handlebars from "express-handlebars";
+import helmet from "helmet";
+import compression from "compression";
+import cors from "cors";
+import cookieSession from "cookie-session";
+import cookieParser from "cookie-parser";
+import logger from "morgan";
+import { routeHandler } from "./routes/index.js";
+import { sequelize } from "./config/index.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import errorHandler from "./lib/errorHandler.js";
+
 const app = express();
-const handlebars = require("express-handlebars");
-const helmet = require("helmet");
-const compression = require("compression");
-const cors = require("cors");
-const session = require("express-session");
-const logger = require("morgan");
-const path = require("path");
 
 if (process.env.NODE_ENV === "development") {
     app.use(logger("dev"));
 }
 
+sequelize.sync();
 app.use(helmet());
 app.use(compression());
 app.use(cors());
 app.use(
-    session({
+    cookieSession({
+        name: "Session",
         secret: process.env.SESSION_SECRET,
-        resave: false,
-        saveUninitialized: false,
+        httpOnly: true,
+        maxAge: 1 * 60 * 1000,
     })
 );
+app.use(cookieParser());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.engine(
     "hbs",
@@ -35,19 +48,21 @@ app.engine(
 );
 app.set("view engine", "hbs");
 app.use(express.static(path.join(__dirname, "public")));
-const routeHandler = require("./routes/index");
 
-app.all("/*", routeHandler);
+// Routes
+app.use(routeHandler);
 
 // Error Handler
 app.use((err, req, res, next) => {
-    console.log(err);
-    res.sendStatus(err.status || 500);
+    errorHandler(err);
 });
 
 // 404 Handler
 app.use((req, res) => {
-    res.sendStatus(404);
+    res.status(404).render("error", {
+        errorTitle: "Page Not Found",
+        errorMessage: "The page you are requesting does not exist",
+    });
 });
 
 app.listen(process.env.PORT || 3000);

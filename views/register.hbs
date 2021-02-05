@@ -1,9 +1,9 @@
 <div class="container">
-    <h1 class="row justify-content-center pt-5">Login</h1>
+    <h1 class="row justify-content-center pt-5">Register</h1>
     {{#if Errors}}
     <span>{{Errors}}</span>
     {{/if}}
-    <form action="/login" method="POST">
+    <form action="/register" method="POST">
         <input type="hidden" name="_csrf" value={{csrfToken}}>
         <div class="mb-3">
             <label for="InputUsername" class="form-label">User Name</label>
@@ -13,8 +13,12 @@
             <label for="InputPassword" class="form-label">Password</label>
             <input type="password" class="form-control" id="InputPassword" name="password">
         </div>
+        <div class="mb-3">
+            <label for="InputPassword2" class="form-label">Re-Type Password</label>
+            <input type="password" class="form-control" id="InputPassword2" name="password2">
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
-    <a href="/register" class="row justify-content-center pt-3">Register</a>
+    <a href="/login" class="row justify-content-center pt-3">Login</a>
 </div>

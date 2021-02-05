@@ -1,0 +1,17 @@
+<nav class="navbar sticky-top">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand">
+            <img src="/images/logo.svg" class="white -inline-block align-top"
+                alt="workout by Smalllike from the Noun Project" height="40" />
+            My Workout
+        </a>
+        <div class="d-flex align-items-start flex-row-reverse bd-highlight">
+            {{#if LoggedIn}}
+            <a href="#logout" class="ps-3 pb-2">Logout</a>
+            {{else}}
+            <a href="#login" class="ps-3 pb-2">Login</a>
+            {{/if}}
+            <a href="#tracker" class="ps-3 pb-2">Tracker</a>
+        </div>
+    </div>
+</nav>

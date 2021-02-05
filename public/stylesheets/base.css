@@ -1,21 +1,15 @@
-.container {
-    width: 100%;
-    padding: 0px 10px 0px 10px;
-    margin: 0 auto 0 auto;
+body {
+    background-color: rgb(22, 53, 83);
+    color: rgb(233, 233, 233);
 }
-
-@media (min-width: 768px) {
-    .container {
-        width: 750px;
-    }
+a {
+    color: rgb(214, 163, 129);
 }
-@media (min-width: 992px) {
-    .container {
-        width: 970px;
-    }
+.white {
+    filter: invert(66%) sepia(91%) saturate(161%) hue-rotate(340deg)
+        brightness(88%) contrast(91%);
+    padding: 0 6px 0 0;
 }
-@media (min-width: 1200px) {
-    .container {
-        width: 1170px;
-    }
+.navbar {
+    background-color: rgb(87, 95, 115);
 }
