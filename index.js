@@ -11,6 +11,7 @@ import { routeHandler } from "./routes/index.js";
 import { sequelize } from "./config/index.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import errorHandler from "./lib/errorHandler.js";
 
 const app = express();
 
@@ -53,18 +54,13 @@ app.use(routeHandler);
 
 // Error Handler
 app.use((err, req, res, next) => {
-    console.log("Error", err.message);
-    res.status(err.status || 500).render("error", {
-        errorTitle: "Oops!",
-        errorMessage:
-            "Sorry there was an error with our services. We are working to fix it!",
-    });
+    errorHandler(err);
 });
 
 // 404 Handler
 app.use((req, res) => {
     res.status(404).render("error", {
-        errorTitle: "404 Page",
+        errorTitle: "Page Not Found",
         errorMessage: "The page you are requesting does not exist",
     });
 });

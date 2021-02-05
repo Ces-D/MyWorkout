@@ -7,14 +7,13 @@ import {
 } from "../lib/registrationHandler.js";
 
 const authRouter = Router();
-//TODO: create first User and log in first User
 // TODO: complete registrationValidation
 // TODO: complete, export then import errorHandler
 
 /* Login Status Check */
 authRouter.use((req, res, next) => {
     if (req.user) {
-        res.send("User Already Logged In"); // TODO: testing
+        res.redirect("/account");
     } else next();
 });
 
@@ -33,7 +32,7 @@ authRouter
     })
 
     .post(loginValidation, loginHandler, (req, res, next) => {
-        res.send("Login was Successful"); // TODO: test
+        res.redirect("/account"); // TODO: Make the account page
     });
 
 /* Register Page */
@@ -48,7 +47,7 @@ authRouter
     })
 
     .post(registrationValidation, registrationHandler, (req, res, next) => {
-        res.send("Registration Successful"); //TODO: test
+        res.redirect("/login");
     });
 
 export default authRouter;
