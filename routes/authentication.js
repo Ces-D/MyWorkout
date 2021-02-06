@@ -7,8 +7,6 @@ import {
 } from "../lib/registrationHandler.js";
 
 const authRouter = Router();
-// TODO: complete registrationValidation
-// TODO: complete, export then import errorHandler
 
 /* Login Status Check */
 authRouter.use((req, res, next) => {
@@ -32,7 +30,7 @@ authRouter
     })
 
     .post(loginValidation, loginHandler, (req, res, next) => {
-        res.redirect("/account"); // TODO: Make the account page
+        res.redirect("/account");
     });
 
 /* Register Page */

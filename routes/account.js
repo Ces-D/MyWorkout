@@ -1,21 +1,26 @@
 import { Router } from "express";
 import { loginRequired } from "../lib/loginHandler.js";
+import { loadAccount } from "../lib/accountHandler.js";
+import { csurfProtection } from "../lib/csurf.js";
 
 const accountRouter = Router();
 
 /* User must be Logged In */
 accountRouter.use(loginRequired);
 
-// TODO: make the account handler
-// the handler should fetch the user on get
-// should handle puts and delete
+/* Csurf protection */
+accountRouter.use(csurfProtection);
 
-// TODO: create the html
+/* Account Page */
+accountRouter
+    .route("/account")
 
-accountRouter.route("/account").get((req, res, next) => {
-    res.render("account");
-});
+    .get(loadAccount);
 
+// Edit Account Page
+accountRouter.route("/account/edit");
 
+/* Delete Account Page */
+accountRouter.route("account/delete");
 
 export default accountRouter;
