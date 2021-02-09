@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { csurfProtection } from "../lib/csurf.js";
-import { loginValidation, loginHandler } from "../lib/loginHandler.js";
+import {
+    loginRequired,
+    loginValidation,
+    loginHandler,
+} from "../lib/loginHandler.js";
 import {
     registrationValidation,
     registrationHandler,
@@ -47,5 +51,11 @@ authRouter
     .post(registrationValidation, registrationHandler, (req, res, next) => {
         res.redirect("/login");
     });
+
+/* Logout Page */
+authRouter.route("/logout").get(loginRequired, (req, res, next) => {
+    req.session = null;
+    res.redirect("/login");
+});
 
 export default authRouter;

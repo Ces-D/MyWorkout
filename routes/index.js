@@ -5,6 +5,6 @@ import accountRouter from "./account.js";
 
 export const routeHandler = Router();
 
-routeHandler.use("/admin/", adminRouter);
 routeHandler.use("/", authRouter);
+routeHandler.use("/admin/", adminRouter);
 routeHandler.use("/", accountRouter);
