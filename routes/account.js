@@ -23,9 +23,9 @@ accountRouter.use(csurfProtection);
 accountRouter
     .route("/account")
 
-    .get((req, res, next) => {
-        const user = loadAccount(res.locals.user);
-        res.locals.options.userName = user.userName;
+    .get(async (req, res, next) => {
+        const user = await loadAccount(res.locals.user);
+        res.locals.options.userName = user;
         res.locals.options.pageTitle = "Account";
         res.render("account", res.locals.options);
     });
@@ -34,19 +34,18 @@ accountRouter
 accountRouter
 
     .route("/account/edit")
+    .get((req, res, next) => {
+        res.locals.csrfToken = req.csrfToken();
+        res.render("accountEdit", res.locals.options);
+    })
 
-    .post(optionalUpdateValidation, (req, res, next) => {
+    .post(optionalUpdateValidation, async (req, res, next) => {
         const validationError = validationResult(req);
         if (!validationError.isEmpty()) {
             next(new FormatError(validationError.array()));
         }
-        const user = updateAccount(res.locals.user, {
-            userName: req.userName,
-            hashedPassword: req.password,
-        });
-        res.locals.options.userName = user.userName;
-        res.locals.options.pageTitle = "Account";
-        res.render("account", res.locals.options);
+        await updateAccount(res.locals.user, req.body);
+        res.redirect("/account");
     });
 
 /* Delete Account Page */
@@ -54,8 +53,8 @@ accountRouter
 
     .route("account/delete")
 
-    .get((req, res, next) => {
-        deleteAccount(res.locals.user);
+    .get(async (req, res, next) => {
+        await deleteAccount(res.locals.user);
         req.session = null;
         res.redirect("/login");
     });
