@@ -13,3 +13,7 @@ a {
 .navbar {
     background-color: rgb(87, 95, 115);
 }
+
+#edits {
+    display: none;
+}

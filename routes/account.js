@@ -1,11 +1,14 @@
 import { Router } from "express";
+import { validationResult } from "express-validator";
 import { loginRequired } from "../lib/loginHandler.js";
+import { FormatError } from "../lib/errors.js";
 import {
     loadAccount,
     updateAccount,
     deleteAccount,
+    optionalUpdateValidation,
 } from "../lib/accountHandler.js";
-import { csurfProtection } from "../lib/csurf.js";
+import { csurfProtection } from "../lib/security.js";
 
 // TODO: Add the buttons and form for deleting and updating the user
 const accountRouter = Router();
@@ -32,7 +35,11 @@ accountRouter
 
     .route("/account/edit")
 
-    .post((req, res, next) => {
+    .post(optionalUpdateValidation, (req, res, next) => {
+        const validationError = validationResult(req);
+        if (!validationError.isEmpty()) {
+            next(new FormatError(validationError.array()));
+        }
         const user = updateAccount(res.locals.user, {
             userName: req.userName,
             hashedPassword: req.password,
@@ -47,7 +54,7 @@ accountRouter
 
     .route("account/delete")
 
-    .post((req, res, next) => {
+    .get((req, res, next) => {
         deleteAccount(res.locals.user);
         req.session = null;
         res.redirect("/login");

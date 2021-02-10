@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { csurfProtection } from "../lib/csurf.js";
+import { csurfProtection } from "../lib/security.js";
 import {
     loginRequired,
     loginValidation,
