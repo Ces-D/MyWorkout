@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="justify-content-center">
+        {{userName}}
+
+        <button class="btn btn-secondary mt-3">
+            <a href="/account/edit">Edit Account</a>
+        </button>
+
+    </div>
+    <div class="workout-title">Workouts</div>
+    <div class="workouts">
+        {{#if workouts}}
+        {{workouts}}
+        {{else}}
+        <div>Oops you don't have any workouts.
+            <a href="#">Click Here</a> to start your journey
+        </div>
+        {{/if}}
+    </div>
+    <div class="program-title">Programs</div>
+    <div class="programs">
+        {{#if programs}}
+        {{programs}}
+        {{else}}
+        <div>Oops you don't have any programs.
+            <a href="#">Click Here</a> if you want to either subscribe to a program or create your own
+        </div>
+        {{/if}}
+    </div>
+</div>

@@ -1,14 +1,16 @@
 import { Router } from "express";
-import { csurfProtection } from "../lib/csurf.js";
-import { loginValidation, loginHandler } from "../lib/loginHandler.js";
+import { csurfProtection } from "../lib/security.js";
+import {
+    loginRequired,
+    loginValidation,
+    loginHandler,
+} from "../lib/loginHandler.js";
 import {
     registrationValidation,
     registrationHandler,
 } from "../lib/registrationHandler.js";
 
 const authRouter = Router();
-// TODO: complete registrationValidation
-// TODO: complete, export then import errorHandler
 
 /* Login Status Check */
 authRouter.use((req, res, next) => {
@@ -32,7 +34,7 @@ authRouter
     })
 
     .post(loginValidation, loginHandler, (req, res, next) => {
-        res.redirect("/account"); // TODO: Make the account page
+        res.redirect("/account");
     });
 
 /* Register Page */
@@ -49,5 +51,11 @@ authRouter
     .post(registrationValidation, registrationHandler, (req, res, next) => {
         res.redirect("/login");
     });
+
+/* Logout Page */
+authRouter.route("/logout").get(loginRequired, (req, res, next) => {
+    req.session = null;
+    res.redirect("/login");
+});
 
 export default authRouter;

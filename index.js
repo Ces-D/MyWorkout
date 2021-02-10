@@ -53,9 +53,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(routeHandler);
 
 // Error Handler
-app.use((err, req, res, next) => {
-    errorHandler(err);
-});
+app.use(errorHandler);
 
 // 404 Handler
 app.use((req, res) => {
